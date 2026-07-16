@@ -14,7 +14,7 @@ metadata:
 
 ## Procedure
 
-1. Resolve `RAG_PROJECT_DIR`; if it is absent, report that RAG is not configured and do not guess a path.
+1. Resolve `RAG_PROJECT_DIR` from `${HERMES_HOME:-$HOME/.hermes}/.env` at the start of every invocation. Do not trust an inherited shell or session value. If the profile file has no `RAG_PROJECT_DIR`, report that RAG is not configured and do not guess a path.
 2. Run `"$RAG_PROJECT_DIR/.venv/bin/python" "$RAG_PROJECT_DIR/ingest.py" --dry-run --json` first.
 3. Show exact `to_index`, `to_delete`, and `ocr_required` lists.
 4. Require explicit current confirmation before deleting vectors, using `--ocr`, or using `--rebuild`.

@@ -14,7 +14,7 @@ metadata:
 
 ## Procedure
 
-1. Resolve `RAG_PROJECT_DIR`; if it is absent, report that RAG is not configured and do not guess a path.
+1. Resolve `RAG_PROJECT_DIR` from `${HERMES_HOME:-$HOME/.hermes}/.env` at the start of every invocation. Do not trust an inherited shell or session value. If the profile file has no `RAG_PROJECT_DIR`, report that RAG is not configured and do not guess a path.
 2. Run `"$RAG_PROJECT_DIR/.venv/bin/python" "$RAG_PROJECT_DIR/ingest.py" --dry-run --json`.
 3. If `to_index`, `to_delete`, or `ocr_required` is non-empty, show exact lists and ask whether to invoke `rag_update`. Do not index, OCR, delete, or rebuild from this skill.
 4. If the index is current, use MCP `qdrant-rag.search_documents`.
