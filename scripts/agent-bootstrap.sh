@@ -34,10 +34,7 @@ if [[ ! -f "$ROOT/.env" ]]; then
   cp "$ROOT/.env.example" "$ROOT/.env"
 fi
 
-mkdir -p "$ROOT/library" "$ROOT/Context" "$HERMES_HOME/skills"
-for skill in rag_search rag_update rag-deploy; do
-  ln -sfn "$ROOT/skills/$skill" "$HERMES_HOME/skills/$skill"
-done
+mkdir -p "$ROOT/library" "$ROOT/Context"
 
 # A disposable clone must never replace the user's active RAG configuration.
 if [[ "$ROOT" == /tmp/* || "$ROOT" == /private/tmp/* ]]; then
@@ -47,6 +44,10 @@ else
 fi
 
 if [[ "$ACTIVATE_RAG" == 1 ]]; then
+  mkdir -p "$HERMES_HOME/skills"
+  for skill in rag_search rag_update rag-deploy; do
+    ln -sfn "$ROOT/skills/$skill" "$HERMES_HOME/skills/$skill"
+  done
   "$PYTHON" - "$HERMES_HOME/.env" "$ROOT" <<'PY'
 from pathlib import Path
 import sys
