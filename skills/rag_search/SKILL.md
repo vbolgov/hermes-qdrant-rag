@@ -18,7 +18,7 @@ metadata:
 2. Run `"$RAG_PROJECT_DIR/.venv/bin/python" "$RAG_PROJECT_DIR/ingest.py" --dry-run --json`.
 3. If `to_index`, `to_delete`, or `ocr_required` is non-empty, show exact lists and ask whether to invoke `rag_update`. Do not index, OCR, delete, or rebuild from this skill.
 4. If the index is current, use MCP `qdrant-rag.search_documents` with `top_k=15` by default; use `top_k=20` for an explicitly detailed request.
-5. Synthesize all relevant returned fragments into a structured answer: direct answer, key details grouped by source/topic, then short quotes and confidence. Cite each source as a clickable Markdown link using MCP `source_url`, e.g. `[full absolute path](file:///absolute/path)`. Do not reduce a multi-fragment result to one isolated quote unless the user asked for brevity.
+5. Write a rich, natural analytical answer: state the direct answer, then explain relationships, mechanisms, implications, comparisons, and tensions that are actually supported by the retrieved fragments. Make reasoned conclusions explicit when multiple sources justify them, clearly distinguishing them from direct quotes; never invent missing evidence or fill gaps with generic advice. Use light headings or bullets only when useful, never a rigid template. Put each evidence block immediately beside the claim it supports: a short quote followed on the next line by `— [<full absolute source_path>](<MCP reveal_url>) · confidence: high|medium|low`. Do not collect citations into a separate source section or replace the answer with citations.
 
 ## Completion check
 

@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import os
+import subprocess
 from pathlib import Path
+from urllib.parse import quote
 
 from mcp.server.fastmcp import FastMCP
 from qdrant_client import QdrantClient
@@ -70,6 +72,7 @@ def _format_hit(hit, *, data_dir: str | Path = RAG_DATA_DIR) -> dict:
         "source_id": payload.get("source_id"),
         "source_path": source_path,
         "source_url": Path(source_path).as_uri() if source_path else None,
+        "reveal_url": f"https://hermes.local/reveal-file?path={quote(source_path, safe='')}" if source_path else None,
         "title": payload.get("title"),
         "chunk_id": payload.get("chunk_id"),
         "chunk_index": payload.get("chunk_index"),
@@ -91,6 +94,21 @@ def collection_stats() -> dict:
         "embedding_model": embedder.model,
         "data_dir": RAG_DATA_DIR,
     }
+
+
+@mcp.tool()
+def reveal_source_in_finder(source_path: str, *, data_dir: str | Path = RAG_DATA_DIR) -> dict:
+    """Reveal a RAG source file in macOS Finder without opening its contents."""
+    root = Path(data_dir).expanduser().resolve()
+    candidate = Path(source_path).expanduser().resolve()
+    try:
+        candidate.relative_to(root)
+    except ValueError:
+        return {"revealed": False, "error": "Source path is outside the configured RAG library."}
+    if not candidate.is_file():
+        return {"revealed": False, "error": "Source file does not exist.", "source_path": str(candidate)}
+    subprocess.run(["open", "-R", str(candidate)], check=True)
+    return {"revealed": True, "source_path": str(candidate)}
 
 
 @mcp.tool()
