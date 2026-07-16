@@ -18,7 +18,7 @@ metadata:
 2. Run `"$RAG_PROJECT_DIR/.venv/bin/python" "$RAG_PROJECT_DIR/ingest.py" --dry-run --json`.
 3. If `to_index`, `to_delete`, or `ocr_required` is non-empty, show exact lists and ask whether to invoke `rag_update`. Do not index, OCR, delete, or rebuild from this skill.
 4. If the index is current, use MCP `qdrant-rag.search_documents` with `top_k=15` by default; use `top_k=20` for an explicitly detailed request.
-5. Synthesize all relevant returned fragments into a structured answer: direct answer, key details grouped by source/topic, then short quotes, full `source_path`, and confidence. Do not reduce a multi-fragment result to one isolated quote unless the user asked for brevity.
+5. Synthesize all relevant returned fragments into a structured answer: direct answer, key details grouped by source/topic, then short quotes and confidence. Cite each source as a clickable Markdown link using MCP `source_url`, e.g. `[full absolute path](file:///absolute/path)`. Do not reduce a multi-fragment result to one isolated quote unless the user asked for brevity.
 
 ## Completion check
 

@@ -62,12 +62,14 @@ def absolute_source_path(source_path: str | None, *, data_dir: str | Path = RAG_
     return str((root.resolve() / source).resolve())
 
 
-def _format_hit(hit) -> dict:
+def _format_hit(hit, *, data_dir: str | Path = RAG_DATA_DIR) -> dict:
     payload = hit.payload or {}
+    source_path = absolute_source_path(payload.get("source_path"), data_dir=data_dir)
     return {
         "score": round(float(hit.score or 0), 4),
         "source_id": payload.get("source_id"),
-        "source_path": absolute_source_path(payload.get("source_path")),
+        "source_path": source_path,
+        "source_url": Path(source_path).as_uri() if source_path else None,
         "title": payload.get("title"),
         "chunk_id": payload.get("chunk_id"),
         "chunk_index": payload.get("chunk_index"),
