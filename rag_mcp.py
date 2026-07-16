@@ -92,7 +92,7 @@ def collection_stats() -> dict:
 
 
 @mcp.tool()
-def search_documents(query: str, top_k: int = 5) -> dict:
+def search_documents(query: str, top_k: int = 15) -> dict:
     """Search the local Qdrant archive and return traceable source fragments."""
     if not client.collection_exists(collection_name=QDRANT_COLLECTION):
         return {"query": query, "embedding_mode": embedder.mode, "results": []}
