@@ -1,0 +1,33 @@
+[project]
+name = "hermes-qdrant-rag"
+version = "0.1.0"
+description = "Local RAG bridge for Hermes + Qdrant + OpenAI embeddings"
+requires-python = ">=3.11"
+dependencies = [
+  "openai>=2.0.0",
+  "qdrant-client>=1.16.0,<1.17.0",
+  "mcp>=1.2.0",
+  "pymupdf>=1.24.0",
+  "python-docx>=1.1.2",
+  "ebooklib>=0.19",
+  "beautifulsoup4>=4.12.3",
+  "fastembed>=0.7.0",
+  "mlx-embeddings==0.1.0",
+  "pyyaml==6.0.2",
+  "paddlepaddle==3.3.1",
+  "paddleocr==3.7.0",
+  "pillow>=10.0.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["embeddings", "index_state", "ingest", "rag_mcp", "vectorize"]
+
+[tool.uv]
+dev-dependencies = []

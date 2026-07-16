@@ -1,0 +1,17 @@
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+*.egg-info/
+.DS_Store
+*.log
+Context/rag-index-manifest.csv
+
+# Private source library: publish only neutral fixtures.
+library/*
+!library/.gitkeep
+!library/.ragignore
+!library/demo/
+!library/demo/**
+!library/test-formats/
+!library/test-formats/**

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0">
+  <description>
+    <title-info><book-title>FB2 Test</book-title></title-info>
+  </description>
+  <body>
+    <section>
+      <title><p>FB2 Заголовок</p></title>
+      <p>Это тестовый FB2 документ для индексации в Qdrant.</p>
+      <p>Ключевая фраза: антихаос и управление знаниями.</p>
+    </section>
+  </body>
+</FictionBook>
